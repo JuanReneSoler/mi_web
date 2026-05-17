@@ -1,1 +1,6 @@
 @import '@xterm/xterm/css/xterm.css';
+
+body {
+  margin: 0;
+  background: black;
+}
