@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
+import { ListOptions, Commands } from './commands';
 
 @Component({
   selector: 'app-terminal',
@@ -84,54 +85,26 @@ export class TerminalComponent implements AfterViewInit {
   handleCommand(command: string) {
     const cmd = command.toLocaleLowerCase();
     if (cmd === 'help') {
-      this.terminal.writeln(`
-Available commands:
-
-about
-whoami
-list projects
-list skills
-list educ
-resume
-download
-lang en
-lang es
-clear
-`);
+      this.terminal.writeln(Commands.help());
     }
     else if (cmd === 'about') {
-      this.terminal.writeln(`
-Software developer passionate about backend,
-systems and interactive experiences.
-`);
+      this.terminal.writeln(Commands.about());
     }
     else if (cmd === 'whoami') {
-      this.terminal.writeln('Juan Soler');
+      this.terminal.writeln(Commands.whoami());
     }
     else if (cmd === 'list projects') {
-      this.terminal.writeln(`
-- Portfolio Terminal
-- Invoice System
-- Linux Server Automation
-`);
+      this.terminal.writeln(Commands.list(ListOptions.projects));
     }
     else if (cmd === 'list skills') {
-      this.terminal.writeln(`
-- AngularJS
-- C#
-- SQL
-- Linux
-- Docker
-`);
+      this.terminal.writeln(Commands.list(ListOptions.skills));
     }
     else if (cmd === 'download') {
-      window.open('/assets/cv.pdf');
-      this.terminal.writeln(`
-  Downloading PDF resume...
-`);
+      Commands.downloadPdf();
+      this.terminal.writeln(`\nDownloading PDF resume...`);
     }
     else if (cmd === 'download -w') {
-      window.open('/assets/cv.docx');
+      Commands.downloadWord();
       this.terminal.writeln(
         'Downloading Word resume...'
       );
@@ -152,9 +125,7 @@ systems and interactive experiences.
       this.terminal.clear();
     }
     else {
-      this.terminal.writeln(
-        `Command not found: ${command}`
-      )
+      this.terminal.writeln(`\nCommand not found: ${command}`)
     }
     this.prompt();
   }

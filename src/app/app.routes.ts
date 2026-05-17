@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { TerminalComponent } from './components/terminal/terminal.component';
+import { TerminalComponent } from './terminal/terminal.component';
 
 export const routes: Routes = [
   {
