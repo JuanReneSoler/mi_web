@@ -53,7 +53,7 @@ export class TerminalViewComponent implements AfterViewInit {
     this.terminal.writeln('');
     this.terminal.writeln(
       `\rType "help" to see available commands.
-      \n\rType "mode -g" to see grafical mode.
+      \n\rType "gmode" to see grafical mode.
 `
     );
     this.terminal.writeln('');
@@ -67,7 +67,8 @@ export class TerminalViewComponent implements AfterViewInit {
     this.terminal.onData((data) => {
       switch (data) {
         case '\r':
-          this.handleCommand(this.currentLine.trim());
+          //this.handleCommand(this.currentLine.trim());
+          this.handleCommand(this.currentLine);
           this.commandHistory.push(this.currentLine);
           this.historyIndex =
             this.commandHistory.length;
@@ -129,6 +130,9 @@ export class TerminalViewComponent implements AfterViewInit {
     }
     else if (command === '') {
       //
+    }
+    else if (command === 'gmode') {
+      window.open('/grafic');
     }
     else {
       this.terminal.writeln(`\n\rCommand not found: ${command}`)

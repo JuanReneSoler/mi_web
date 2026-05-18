@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: Terminal
   },
   {
-    path: '/grafic',
+    path: 'grafic',
     component: Home
   }
 ];
