@@ -1,15 +1,19 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
-import { Commands, ListOptions } from '../../../../core/commands';
+import { Help } from '../../../../core/commands/help';
+import { About } from '../../../../core/commands/about';
+import { Whoami } from '../../../../core/commands/whoami';
+import { List } from '../../../../core/commands/list';
+import { Download } from '../../../../core/commands/download';
 
 @Component({
-  selector: 'app-terminal',
+  selector: 'terminal-view',
   imports: [],
-  templateUrl: './terminal.component.html',
-  styleUrl: './terminal.component.css',
+  templateUrl: './terminal-view.component.html',
+  styleUrl: './terminal-view.component.css',
 })
-export class TerminalComponent implements AfterViewInit {
+export class TerminalViewComponent implements AfterViewInit {
   terminal!: Terminal;
   fitAddon!: FitAddon;
 
@@ -48,13 +52,15 @@ export class TerminalComponent implements AfterViewInit {
     this.terminal.writeln('Juan Rene Soler Terminal v1.0');
     this.terminal.writeln('');
     this.terminal.writeln(
-      'Type "help" to see available commands.'
+      `\rType "help" to see available commands.
+      \n\rType "mode -g" to see grafical mode.
+`
     );
     this.terminal.writeln('');
   }
 
   prompt() {
-    this.terminal.write('\r\n$ ');
+    this.terminal.write('\r\njsoler@homepage $> ');
   }
 
   listenTerminal() {
@@ -84,29 +90,27 @@ export class TerminalComponent implements AfterViewInit {
   handleCommand(command: string) {
     const cmd = command.toLocaleLowerCase();
     if (cmd === 'help') {
-      this.terminal.writeln(Commands.help());
+      this.terminal.writeln(new Help().Run());
     }
     else if (cmd === 'about') {
-      this.terminal.writeln(Commands.about());
+      this.terminal.writeln(new About().Run());
     }
     else if (cmd === 'whoami') {
-      this.terminal.writeln(Commands.whoami());
+      this.terminal.writeln(new Whoami().Run());
     }
     else if (cmd === 'list projects') {
-      this.terminal.writeln(Commands.list(ListOptions.projects));
+      this.terminal.writeln(new List().Run(['projects']));
     }
     else if (cmd === 'list skills') {
-      this.terminal.writeln(Commands.list(ListOptions.skills));
+      this.terminal.writeln(new List().Run(['skills']));
     }
     else if (cmd === 'download') {
-      Commands.downloadPdf();
-      this.terminal.writeln(`\nDownloading PDF resume...`);
+      let result = new Download().Run(['--pdf']);
+      this.terminal.writeln(result);
     }
-    else if (cmd === 'download -w') {
-      Commands.downloadWord();
-      this.terminal.writeln(
-        'Downloading Word resume...'
-      );
+    else if (cmd === 'download --word') {
+      let result = new Download().Run(['--word']);
+      this.terminal.writeln(result);
     }
     else if (cmd === 'lang es') {
       this.languaje = 'es';
@@ -123,8 +127,11 @@ export class TerminalComponent implements AfterViewInit {
     else if (cmd === 'clear') {
       this.terminal.clear();
     }
+    else if (command === '') {
+      //
+    }
     else {
-      this.terminal.writeln(`\nCommand not found: ${command}`)
+      this.terminal.writeln(`\n\rCommand not found: ${command}`)
     }
     this.prompt();
   }
