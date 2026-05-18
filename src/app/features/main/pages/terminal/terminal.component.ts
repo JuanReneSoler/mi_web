@@ -1,7 +1,7 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
-import { ListOptions, Commands } from './commands';
+import { Commands, ListOptions } from '../../../../core/commands';
 
 @Component({
   selector: 'app-terminal',
@@ -10,7 +10,6 @@ import { ListOptions, Commands } from './commands';
   styleUrl: './terminal.component.css',
 })
 export class TerminalComponent implements AfterViewInit {
-
   terminal!: Terminal;
   fitAddon!: FitAddon;
 

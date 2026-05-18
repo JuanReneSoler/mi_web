@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('mi-web');
+  protected readonly title = signal('Juan René Soler Sirí');
 }
