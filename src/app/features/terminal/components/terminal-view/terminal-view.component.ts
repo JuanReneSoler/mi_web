@@ -53,10 +53,8 @@ export class TerminalViewComponent implements AfterViewInit {
     this.terminal.writeln('');
     this.terminal.writeln(
       `\rType "help" to see available commands.
-      \n\rType "gmode" to see grafical mode.
-`
+      \n\rType "gmode" to see grafical mode.`
     );
-    this.terminal.writeln('');
   }
 
   prompt() {
